@@ -1,0 +1,70 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="MyRecyclingApp.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    shell:SystemTray.IsVisible="True">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="#33CC66">
+        <Grid.RowDefinitions>
+            <!--<RowDefinition Height="Auto"/>-->
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        
+        <!--TitlePanel contains the name of the application and page title-->
+        <!--<StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="My Recycling App" Margin="9,-7,0,0" 
+                       Style="{StaticResource PhoneTextTitle1Style}"
+                       FontSize="45"
+                       FontWeight="Bold"/>
+        </StackPanel>-->
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="0" Grid.Column="0" Margin="12,0,12,0">
+            <phone:Panorama>
+                <phone:Panorama.Background>
+                    <ImageBrush ImageSource="Assets/Images/montaña2.jpg"
+                                AlignmentX="Center" />
+                </phone:Panorama.Background>
+                <phone:PanoramaItem x:Name="Inicio" Header="Inicio">
+                    <Grid>
+                        
+                    </Grid>
+                </phone:PanoramaItem>
+                <phone:PanoramaItem x:Name="Noticias" Header="Noticias">
+                    <StackPanel Orientation="Vertical">
+                        
+                    </StackPanel>
+                </phone:PanoramaItem>
+                <phone:PanoramaItem x:Name="Favoritos" Header="Favoritos">
+                    <StackPanel Orientation="Vertical">
+                        
+                    </StackPanel>
+                </phone:PanoramaItem>
+            </phone:Panorama>
+        </Grid>
+    </Grid>
+
+    <!--MENU DE LA PARTE DE ABAJO (SETTINGS)-->
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsMenuEnabled="True" IsVisible="True">
+            <shell:ApplicationBarIconButton IconUri="/Assets/Icons/feature.settings.png"
+                                            Text="Setting">
+
+            </shell:ApplicationBarIconButton>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+</phone:PhoneApplicationPage>
