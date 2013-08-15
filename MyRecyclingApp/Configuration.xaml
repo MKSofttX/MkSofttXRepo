@@ -1,0 +1,76 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="MyRecyclingApp.Configuration"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="#585858">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="Configuration" Margin="9,-7,0,0" 
+                       FontFamily="/Assets/Fonts/Font1.ttf#a song for jennifer"
+                       FontSize="50"
+                       FontWeight="Bold"
+                       Foreground="Green"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="90" />
+                <RowDefinition Height="170" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <!--NOTIFICATION SECTION-->
+            <TextBlock Text="Notificaciones:"
+                       Grid.Row="0" Grid.Column="0"
+                       VerticalAlignment="Center"
+                       FontFamily="/Assets/Fonts/Font1.ttf#a song for jennifer"
+                       FontSize="24"
+                       Foreground="Green"/>
+            
+            <toolkit:ToggleSwitch x:Name="toggleNotification" Grid.Row="0" Grid.Column="1"
+                                  VerticalAlignment="Center" Height="107"
+                                  Background="Green"/>
+
+            <!--IDIOM SECTION-->
+            <TextBlock Text="Filtrar por Idioma:"
+                       Grid.Row="1" Grid.Column="0"
+                       VerticalAlignment="Top"
+                       FontFamily="/Assets/Fonts/Font1.ttf#a song for jennifer"
+                       FontSize="24"
+                       Foreground="Green"
+                       Margin="0 15 0 0"/>
+            
+            <toolkit:ListPicker x:Name="listIdioma" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Margin="0 -5 0 0"
+                                BorderBrush="Green">
+                <toolkit:ListPickerItem Content="Español" />
+                <toolkit:ListPickerItem Content="Ingles" />
+                <toolkit:ListPickerItem Content="Ambos" />
+            </toolkit:ListPicker>
+        </Grid>
+    </Grid>
+
+</phone:PhoneApplicationPage>

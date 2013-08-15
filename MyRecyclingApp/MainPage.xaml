@@ -12,6 +12,145 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     shell:SystemTray.IsVisible="True">
+    
+    <shell:SystemTray.ProgressIndicator>
+        <shell:ProgressIndicator x:Name="progressIndicator" IsIndeterminate="True" IsVisible="False" />
+    </shell:SystemTray.ProgressIndicator>
+    
+    <phone:PhoneApplicationPage.Resources>
+        <!--TEMPLATE FOR THE THE BEGINING SECTION-->
+        <DataTemplate x:Key="NewsByTagDataTemplate">
+            <Border BorderBrush="Green" BorderThickness="5" Margin="0 0 0 7">
+                <Grid Background="White" Opacity="0.7">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="90" />
+                        <RowDefinition Height="35" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="355" />
+                        <ColumnDefinition Width="60" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Title}"
+                               FontWeight="Bold" 
+                               FontSize="24"
+                               Foreground="Green"
+                               VerticalAlignment="Center"
+                               TextWrapping="Wrap"/>
+                    <Button x:Name="btnAddFavorites" Grid.Row="0" Grid.Column="1" Width="80" Height="80" Margin="-5 -15 0 0"
+                            Click="btnAddFavorites_Click">
+                        <Button.Background>
+                            <ImageBrush ImageSource="Assets/Icons/favs.addto.png" />
+                        </Button.Background>
+                    </Button>
+                    <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding Description}" 
+                               Foreground="Green"
+                               HorizontalAlignment="Left"
+                               TextWrapping="Wrap"/>
+                    <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding PubDate}" 
+                               FontSize="20"
+                               Foreground="Green"
+                               HorizontalAlignment="Right"
+                               VerticalAlignment="Top"/>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+        <!--TEMPLATE FOR THE THE NEWS SECTION-->
+        <DataTemplate x:Key="NewsDataTemplate">
+            <Border BorderBrush="Green" BorderThickness="5" Margin="0 0 0 7">
+                <Grid Background="White" Opacity="0.7">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100" />
+                        <RowDefinition Height="130" />
+                        <RowDefinition Height="50" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="260" />
+                        <ColumnDefinition Width="60" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Title}"
+                               FontWeight="Bold" 
+                               FontSize="22"
+                               Foreground="Green"
+                               VerticalAlignment="Center"
+                               TextWrapping="Wrap" />
+                    <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Description}" 
+                               Foreground="Green"
+                               HorizontalAlignment="Left"
+                               TextWrapping="Wrap" />
+                    <Image Grid.RowSpan="2" Grid.Column="0" VerticalAlignment="Center" 
+                           Source="{Binding Image}"
+                           Width="100"
+                           Height="100"/>
+                    <Button x:Name="btnAddNewsToFavorites" Grid.Column="3" Width="70" Height="70">
+                        <Button.Background>
+                            <ImageBrush ImageSource="/Assets/Icons/favs.addto.png" />
+                        </Button.Background>
+                    </Button>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" 
+                               Margin="-15 0 0 0"
+                               Text="{Binding PubDate}" 
+                               FontSize="20"
+                               Foreground="Green"
+                               HorizontalAlignment="Right"
+                               VerticalAlignment="Center" />
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+        <!--TEMPLATE FOR THE THE FAVORITE SECTION-->
+        <DataTemplate x:Key="FavoriteDataTemplate">
+            <Border BorderBrush="Green" BorderThickness="5" Margin="0 0 0 7">
+                <Grid Background="White" Opacity="0.7">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="60" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--<Button x:Name="btnFavorites" Grid.Row="0" Grid.Column="0" Width="70" Height="70" Margin="-5 -10 0 0">
+                        <Button.Background>
+                            <ImageBrush ImageSource="Assets/Icons/favs.png" />
+                        </Button.Background>
+                    </Button>-->
+                    <Image Grid.Row="0" Grid.Column="0" Width="70" Height="70" Margin="-5 -10 0 0" Source="/Assets/Icons/favs.png" />
+                    <TextBlock x:Name="txtTitle" Grid.Column="1" Text="{Binding Title}"
+                               TextWrapping="Wrap"
+                               FontSize="22"
+                               Foreground="Green"
+                               VerticalAlignment="Center"/>
+                    <Button x:Name="btnDeleteFavorites" Grid.Column="2" Width="70" Height="70" Margin="-5 -10 0 0">
+                        <Button.Background>
+                            <ImageBrush ImageSource="Assets/Icons/delete.png" />
+                        </Button.Background>
+                    </Button>
+                </Grid>
+            </Border>
+        </DataTemplate>
+        
+        <DataTemplate x:Key="MyTitleTemplate">
+            <TextBlock Text="{Binding}" 
+                       FontSize="50" 
+                       FontWeight="Bold"
+                       FontFamily="/Assets/Fonts/Font1.ttf#a song for jennifer"
+                       Margin="0 50 0 0" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="MyHeaderTemplate">
+            <TextBlock Text="{Binding}" 
+                       FontSize="40" 
+                       FontWeight="Bold"
+                       FontFamily="/Assets/Fonts/Font1.ttf#a song for jennifer"
+                       Margin="0 50 0 0" />
+        </DataTemplate>
+    </phone:PhoneApplicationPage.Resources>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="#33CC66">
@@ -24,35 +163,148 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         
-        <!--TitlePanel contains the name of the application and page title-->
-        <!--<StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="My Recycling App" Margin="9,-7,0,0" 
-                       Style="{StaticResource PhoneTextTitle1Style}"
-                       FontSize="45"
-                       FontWeight="Bold"/>
-        </StackPanel>-->
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="0" Grid.Column="0" Margin="12,0,12,0">
-            <phone:Panorama>
+            <phone:Panorama x:Name="panoramaControl" Title="My Recycling App"
+                            TitleTemplate="{StaticResource MyTitleTemplate}"
+                            SelectionChanged="panoramaControl_SelectionChanged">
                 <phone:Panorama.Background>
-                    <ImageBrush ImageSource="Assets/Images/montaña2.jpg"
+                    <ImageBrush ImageSource="Assets/Images/montaña3.jpg"
                                 AlignmentX="Center" />
                 </phone:Panorama.Background>
-                <phone:PanoramaItem x:Name="Inicio" Header="Inicio">
-                    <Grid>
+                <phone:PanoramaItem x:Name="Inicio" 
+                                    Header="Inicio"
+                                    HeaderTemplate="{StaticResource MyHeaderTemplate}">
+                    <Grid Margin="0 -35 0 75">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
                         
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock Text="Recyword:" FontSize="25" FontFamily="Sego" VerticalAlignment="Center" />
+                            <TextBox x:Name="txtTag" Width="245" Foreground="Green" />
+                            <Button x:Name="btnSearch" Width="70" Height="70" Margin="-5 0 0 0" 
+                                    Click="btnSearch_Click">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Assets/Icons/feature.search.png" />
+                                </Button.Background>
+                            </Button>
+                        </StackPanel>
+
+                        <ListBox x:Name="listNews" Grid.Row="1" ItemTemplate="{StaticResource NewsByTagDataTemplate}" 
+                                 SelectionChanged="listNews_SelectionChanged">
+                        </ListBox>
+                       
                     </Grid>
                 </phone:PanoramaItem>
-                <phone:PanoramaItem x:Name="Noticias" Header="Noticias">
-                    <StackPanel Orientation="Vertical">
+                <phone:PanoramaItem x:Name="Noticias" 
+                                    Header="Noticias"
+                                    HeaderTemplate="{StaticResource MyHeaderTemplate}">
+
+                    <!--<Border BorderBrush="Green" BorderThickness="5" Margin="0 0 0 7">
+                        <Grid Background="White" Opacity="0.7">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="70" />
+                                <ColumnDefinition Width="230" />
+                                <ColumnDefinition Width="70" />
+                            </Grid.ColumnDefinitions>
+
+                            <Button x:Name="btnFavorites" Grid.Row="0" Grid.Column="0" Width="80" Height="80" Margin="-5 -15 0 0">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Assets/Icons/favs.png" />
+                                </Button.Background>
+                            </Button>
+                            <TextBlock x:Name="txtTitle" Grid.Column="1" Text="{Binding Title}" />
+                            <Button x:Name="btnDeleteFavorites" Grid.Column="2" Width="80" Height="80" Margin="-5 -15 0 0">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Assets/Icons/delete.png" />
+                                </Button.Background>
+                            </Button>
+                        </Grid>
+                    </Border>-->
+
+                    <!--<StackPanel Orientation="Vertical">
                         
-                    </StackPanel>
+                    </StackPanel>-->
+                    <!--<Border BorderBrush="Green" BorderThickness="5" Height="Auto">
+                        <Grid Background="White" Opacity="0.7" Height="Auto">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="60" />
+                                <RowDefinition Height="90" />
+                                <RowDefinition Height="35" />
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="60" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Title"
+                                   FontWeight="Bold" 
+                                   FontSize="34"
+                                   Foreground="Green"
+                                   VerticalAlignment="Center"/>
+                            <Button Grid.Row="0" Grid.Column="1" Width="60" Height="60" Margin="-5 0 0 0"
+                                    Foreground="Green">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Assets/Icons/favs.addto.png" />
+                                </Button.Background>
+                            </Button>
+                            <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Text="Description Description Description Description Description Description" 
+                           Foreground="Green"
+                           HorizontalAlignment="Left"
+                                       TextWrapping="Wrap"/>
+                            <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="PubDate" 
+                                   FontSize="24"
+                                   Foreground="Green"
+                                   HorizontalAlignment="Right"/>
+                        </Grid>
+                    </Border>-->
+
+                    <!--<Border BorderBrush="Green" BorderThickness="5" Height="Auto">
+                        <Grid Background="White" Opacity="0.7" 
+                              Height="Auto"
+                              Margin="0 -3 0 75">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="100" />
+                                <RowDefinition Height="150" />
+                                <RowDefinition Height="70" />
+                            </Grid.RowDefinitions>
+                            
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            
+                            <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="Titulo" Foreground="Green" />
+                            <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Text="Descripcion" Foreground="Green" />
+                            <Image Grid.RowSpan="2" Grid.Column="0" VerticalAlignment="Center" 
+                                   Source="/logoAppEscarcha.png" />
+                            <Button Grid.Column="3" Width="70" Height="70">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="/Assets/Icons/favs.addto.png" />
+                                </Button.Background>
+                            </Button>
+                            <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" 
+                                       Text="Fecha" Foreground="Green" />
+                        </Grid>
+                    </Border>-->
+
+                    <ListBox x:Name="listNews2" 
+                             ItemTemplate="{StaticResource NewsDataTemplate}"
+                             SelectionChanged="listNews2_SelectionChanged">
+                    </ListBox>
                 </phone:PanoramaItem>
-                <phone:PanoramaItem x:Name="Favoritos" Header="Favoritos">
-                    <StackPanel Orientation="Vertical">
-                        
-                    </StackPanel>
+                <phone:PanoramaItem x:Name="Favoritos" 
+                                    Header="Favoritos"
+                                    HeaderTemplate="{StaticResource MyHeaderTemplate}">
+                    <ListBox x:Name="listFavorites" 
+                             ItemTemplate="{StaticResource FavoriteDataTemplate}">
+                    </ListBox>
                 </phone:PanoramaItem>
             </phone:Panorama>
         </Grid>
@@ -60,11 +312,15 @@
 
     <!--MENU DE LA PARTE DE ABAJO (SETTINGS)-->
     <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsMenuEnabled="True" IsVisible="True">
-            <shell:ApplicationBarIconButton IconUri="/Assets/Icons/feature.settings.png"
-                                            Text="Setting">
-
-            </shell:ApplicationBarIconButton>
+        <shell:ApplicationBar Opacity="0.5" IsMenuEnabled="True" IsVisible="True" BackgroundColor="Green">
+            <shell:ApplicationBarIconButton x:Name="btnConfig" 
+                                            IconUri="/Assets/Icons/feature.settings.png"
+                                            Text="Config"
+                                            Click="btnConfig_Click"/>
+            <shell:ApplicationBarIconButton x:Name="btnRefresh" 
+                                            IconUri="/Assets/Icons/refresh.png"
+                                            Text="Actualizar"
+                                            Click="btnRefresh_Click"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>
