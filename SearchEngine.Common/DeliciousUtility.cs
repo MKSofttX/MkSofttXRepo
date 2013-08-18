@@ -25,6 +25,7 @@ namespace SearchEngine.Common
                 string sUri = string.Format("http://previous.delicious.com/v2/rss/mksofttx/{0}?private=COI4Ljpv1F27m5wWgui3X-ZW1ME_H4yxtjthVCPd2EE=", sTag);
 
                 ObservableCollection<NewsByTag> listNewsByTag;
+                var a = listNewsByTag;
 
                 HttpClient client = new HttpClient();
                 var result = await client.GetStringAsync(sUri);
