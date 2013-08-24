@@ -16,7 +16,7 @@ namespace MyRecyclingApp.Common
 
         public static ObservableCollection<NewsByTag> Deserialize(string fileName)
         {
-            ObservableCollection<NewsByTag> listData = new ObservableCollection<NewsByTag>(); ;
+            ObservableCollection<NewsByTag> listData = new ObservableCollection<NewsByTag>();
 
             if (!DesignerProperties.IsInDesignTool)
             {

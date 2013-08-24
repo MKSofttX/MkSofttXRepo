@@ -16,6 +16,7 @@ using Microsoft.Phone.Tasks;
 using SearchEngine.Common;
 using System.Collections.ObjectModel;
 using System.IO.IsolatedStorage;
+using System.Device.Location;
 
 namespace MyRecyclingApp
 {
@@ -48,6 +49,7 @@ namespace MyRecyclingApp
             LoadNewsByTag();
             LoadFavorites();
             LoadNews();
+            LoadPinsInMap();
         }
 
         #region Methods
@@ -94,6 +96,12 @@ namespace MyRecyclingApp
             {
                 MessageBox.Show("Error when loading favorites. Error: " + ex.Message, "ERROR", MessageBoxButton.OK);
             }
+        }
+
+        private void LoadPinsInMap()
+        {
+            var locations = from l in Locations.GetRecyclingCenterLocations()
+                            select new GeoCoordinate(l.X, l.Y);
         }
 
         private void GetIdiomToFilter()

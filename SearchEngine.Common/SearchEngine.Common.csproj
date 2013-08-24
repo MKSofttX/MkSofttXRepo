@@ -38,6 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DeliciousUtility.cs" />
+    <Compile Include="Locations.cs" />
     <Compile Include="News.cs" />
     <Compile Include="NewsByTag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
