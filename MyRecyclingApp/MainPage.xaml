@@ -328,11 +328,22 @@
 					Header="Centros de Reciclaje"
 					HeaderTemplate="{StaticResource MyHeaderTemplate}">
 
-                    <!--<maps:Map x:Name="map"
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Slider x:Name="SliderZoom" Minimum="1"
+                    Maximum="20"
+                    Value="{Binding ZoomLevel, ElementName=map2, Mode=TwoWay}"
+                    />
+                        <maps:Map x:Name="map2" Grid.Row="1"
                       PedestrianFeaturesEnabled="True"
                       LandmarksEnabled="True"
-                      />-->
-                    
+                      ZoomLevel="5"
+                      />
+                        
+                    </Grid>                    
                 </phone:PanoramaItem>
             </phone:Panorama>
         </Grid>

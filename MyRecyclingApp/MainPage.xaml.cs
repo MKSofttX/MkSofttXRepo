@@ -17,6 +17,12 @@ using SearchEngine.Common;
 using System.Collections.ObjectModel;
 using System.IO.IsolatedStorage;
 using System.Device.Location;
+using Microsoft.Phone.Maps.Controls;
+using Windows.Devices.Geolocation;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using Microsoft.Phone.Maps.Toolkit;
+using System.Threading.Tasks;
 
 namespace MyRecyclingApp
 {
@@ -40,7 +46,7 @@ namespace MyRecyclingApp
             Loaded += MainPage_Loaded;
         }
 
-        void MainPage_Loaded(object sender, RoutedEventArgs e)
+        async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             SystemTray.SetForegroundColor(this, Colors.Green);
             _listFavorites = new ObservableCollection<NewsByTag>();
@@ -49,7 +55,7 @@ namespace MyRecyclingApp
             LoadNewsByTag();
             LoadFavorites();
             LoadNews();
-            LoadPinsInMap();
+            await LoadPinsInMap();
         }
 
         #region Methods
@@ -98,10 +104,60 @@ namespace MyRecyclingApp
             }
         }
 
-        private void LoadPinsInMap()
+        Geolocator ubicacion;
+        private async Task ObtenerUbicacion()
         {
+                ubicacion = new Geolocator();
+                ubicacion.MovementThreshold = 10;
+                ubicacion.DesiredAccuracyInMeters = 5;
+                //ubicacion.PositionChanged += ubicacion_PositionChanged;
+                var position = await ubicacion.GetGeopositionAsync();
+
+                map2.Center = position.Coordinate.ToGeoCoordinate();
+        }
+
+        double latitud;
+        double longitud;
+        private void ubicacion_PositionChanged(Geolocator sender, PositionChangedEventArgs args)
+        {
+            latitud = args.Position.Coordinate.Latitude;
+            longitud = args.Position.Coordinate.Longitude;
+        }
+
+        private async Task LoadPinsInMap()
+        {
+
             var locations = from l in Locations.GetRecyclingCenterLocations()
-                            select new GeoCoordinate(l.X, l.Y);
+                            select new { Name = l.Name, Coordinate = new GeoCoordinate(l.X, l.Y) };
+
+            foreach (var l in locations)
+            {
+                try
+                {
+                    var overlay = new MapOverlay();
+                    overlay.GeoCoordinate = new System.Device.Location.GeoCoordinate(l.Coordinate.Latitude, l.Coordinate.Longitude);
+
+                    overlay.Content = new Pushpin()
+                    {
+                        //Fill = new SolidColorBrush(Colors.Red),
+                        //Width = 30,
+                        //Height = 30,
+                        //Stroke = new SolidColorBrush(Colors.Red)
+                        Content= l.Name
+                    };
+                    var layer = new MapLayer();
+                    layer.Add(overlay);
+
+                    map2.Layers.Add(layer);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
+            }
+
+            await ObtenerUbicacion();
         }
 
         private void GetIdiomToFilter()
